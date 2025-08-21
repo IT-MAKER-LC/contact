@@ -2,6 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="styles.css">
+  </noscript>
+  <script>
+    // Fallback for browsers that do not support rel=preload
+    (function() {
+      var relPreloadSupport = false;
+      try {
+        relPreloadSupport = document.createElement('link').relList.supports('preload');
+      } catch (e) {}
+      if (!relPreloadSupport) {
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'styles.css';
+        document.head.appendChild(link);
+      }
+    })();
+  </script>
+  <!-- Ensure /social-image-it-maker.png exists at the web root or update to an absolute URL if needed -->
+  <meta property="og:image" content="/social-image-it-maker.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="IT MAKER LC - IT Services Roanoke VA">
   <meta property="og:title" content="IT MAKER LC - IT Services Roanoke VA">
@@ -11,59 +32,6 @@
   <link rel="icon" href="/favicon-it-maker.ico" type="image/x-icon">
   <title>IT MAKER LC - IT Services Roanoke VA</title>
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Courier Prime', monospace;
-      background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
-      color: rgb(255, 17, 0);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      height: 100vh;
-      padding: 20px;
-      overflow: hidden;
-    }
-
-    .container {
-      max-width: 700px;
-      background: rgba(0, 0, 0, 0);
-      padding: 40px;
-      border: 2px solid rgb(255, 17, 0);
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(255, 17, 0, 0.4);
-    }
-
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      letter-spacing: 3px;
-      text-shadow: 0 0 3px rgb(255, 17, 0);
-    }
-
-    p {
-      font-size: 1.3rem;
-      font-weight: bold;
-      margin-bottom: 1rem;
-      color: rgb(169, 169, 169);
-    }
-
-    textarea {
-      resize: none;
-    }
-
-    .footer {
-      margin-top: 30px;
-      font-size: 1rem;
-      opacity: 1;
-    }
-  </style>
 </head>
 <body>
   <div class="container">
@@ -71,18 +39,14 @@
     <p>Hourly IT Services for Small Businesses</p>
     <p>After Hours & Weekends</p>
     <iframe 
-      width="640px" height="600px"
+      class="form-frame"
       src="https://forms.office.com/r/YXRTmMqiV9?embed=true"
-      frameborder="0"
-      marginwidth="0"
-      marginheight="0"
-      style="border: none; box-shadow: 0 0 20px rgba(255, 17, 0, 0.4); max-width:100%; max-height:100vh"
-      allowfullscreen
-      webkitallowfullscreen
-      mozallowfullscreen
-      msallowfullscreen>
+      allowfullscreen>
     </iframe>
-    <div class="footer">&copy; 2025 IT MAKER LC.</div>
+    <div class="footer">&copy; <span id="year"></span> IT MAKER LC.</div>
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
   </div>
 </body>
 </html>
