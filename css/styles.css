@@ -1,0 +1,402 @@
+/* =============================================================================
+   IT MAKER LC — styles.css
+   Design system + shared components for the multi-page site.
+   Aesthetic: dark, authoritative, "network-ops / classified briefing".
+   Palette: deep navy / gunmetal / near-black + single electric-teal accent.
+   Type: IBM Plex Sans (body) + IBM Plex Mono (labels/data), self-hosted.
+
+   Structure of this file:
+     1. Design tokens (:root custom properties)
+     2. Self-hosted fonts (@font-face)
+     3. Reset & base
+     4. Typography
+     5. Layout (container, sections)
+     6. Accessibility (skip link, focus)
+     7. Header / nav
+     8. Buttons
+     9. Eyebrow labels + section headers
+    10. Forms
+    11. Footer
+    12. Utilities
+    13. Reduced-motion
+   ============================================================================= */
+
+/* 1. DESIGN TOKENS ---------------------------------------------------------- */
+:root {
+  /* Color — one accent, used sparingly */
+  --bg:          #0A0E14;  /* page background (near-black) */
+  --surface:     #111722;  /* cards, panels (deep navy) */
+  --surface-2:   #1A2230;  /* raised / hover surfaces */
+  --border:      #2A3546;  /* gunmetal hairlines */
+  --text:        #E6EAF0;  /* primary text */
+  --text-muted:  #9AA7B8;  /* secondary text */
+  --accent:      #00C2C7;  /* electric teal — links, CTAs, focus */
+  --accent-hover:#2FD9DE;
+  --accent-dim:  #0A6E71;  /* subtle accent fills */
+  --danger:      #E5484D;  /* error text */
+  --success:     #30A46C;  /* success text */
+
+  /* Spacing scale (keep rhythm consistent everywhere) */
+  --space-1: 4px;   --space-2: 8px;   --space-3: 12px;  --space-4: 16px;
+  --space-5: 24px;  --space-6: 32px;  --space-7: 48px;  --space-8: 64px;
+  --space-9: 96px;
+
+  /* Type families — self-hosted first, robust fallbacks so the site
+     looks right even before the woff2 files are added to /assets/fonts. */
+  --font-sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+               Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, "Cascadia Mono",
+               Consolas, "Liberation Mono", monospace;
+
+  /* Radii, shadow, motion, layout */
+  --radius:      6px;
+  --radius-lg:   10px;
+  --shadow:      0 8px 24px rgba(0,0,0,0.35);
+  --transition:  150ms ease;
+  --maxw:        1100px;   /* container max width */
+  --gutter:      24px;
+}
+
+/* 2. SELF-HOSTED FONTS ------------------------------------------------------ */
+/* Add the matching .woff2 files to /assets/fonts/ (see assets/fonts/README.md).
+   font-display: swap = show fallback immediately, swap in Plex when ready. */
+@font-face {
+  font-family: "IBM Plex Sans"; font-style: normal; font-weight: 400;
+  font-display: swap; src: url("../assets/fonts/IBMPlexSans-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Sans"; font-style: normal; font-weight: 500;
+  font-display: swap; src: url("../assets/fonts/IBMPlexSans-Medium.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Sans"; font-style: normal; font-weight: 600;
+  font-display: swap; src: url("../assets/fonts/IBMPlexSans-SemiBold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Mono"; font-style: normal; font-weight: 400;
+  font-display: swap; src: url("../assets/fonts/IBMPlexMono-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Mono"; font-style: normal; font-weight: 500;
+  font-display: swap; src: url("../assets/fonts/IBMPlexMono-Medium.woff2") format("woff2");
+}
+
+/* 3. RESET & BASE ----------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  /* subtle ops-grid texture: faint gunmetal grid lines, very low contrast */
+  background-image:
+    linear-gradient(rgba(42,53,70,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42,53,70,0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img, svg { display: block; max-width: 100%; height: auto; }
+a { color: var(--accent); text-decoration: none; transition: color var(--transition); }
+a:hover { color: var(--accent-hover); }
+
+/* 4. TYPOGRAPHY ------------------------------------------------------------- */
+h1, h2, h3 { font-weight: 600; line-height: 1.15; color: #FFFFFF; letter-spacing: -0.01em; }
+h1 { font-size: clamp(2rem, 5vw, 3.25rem); }
+h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+h3 { font-size: 1.25rem; }
+p  { color: var(--text); }
+.lead { font-size: 1.125rem; color: var(--text-muted); max-width: 60ch; }
+strong { font-weight: 600; color: #FFFFFF; }
+
+/* 5. LAYOUT ----------------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+section { padding-block: var(--space-8); }
+.section-tight { padding-block: var(--space-7); }
+
+/* 6. ACCESSIBILITY ---------------------------------------------------------- */
+/* Skip link: hidden until keyboard-focused, then visible top-left */
+.skip-link {
+  position: absolute; left: var(--space-3); top: -60px;
+  background: var(--accent); color: #04262A; font-weight: 600;
+  padding: var(--space-2) var(--space-4); border-radius: var(--radius);
+  z-index: 1000; transition: top var(--transition);
+}
+.skip-link:focus { top: var(--space-3); }
+
+/* Visible teal focus ring for keyboard users on all interactive elements */
+a:focus-visible, button:focus-visible, input:focus-visible,
+select:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* 7. HEADER / NAV ----------------------------------------------------------- */
+.site-header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(10,14,20,0.85);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+.nav {
+  display: flex; align-items: center; justify-content: space-between;
+  min-height: 64px; gap: var(--space-4);
+}
+.brand {
+  font-family: var(--font-mono); font-weight: 500; font-size: 1.05rem;
+  color: #FFFFFF; letter-spacing: 0.02em; white-space: nowrap;
+}
+.brand:hover { color: #FFFFFF; }
+.brand .brand-mark { color: var(--accent); }  /* teal accent on the mark */
+
+.nav-links {
+  display: flex; align-items: center; gap: var(--space-5); list-style: none;
+}
+.nav-links a {
+  color: var(--text-muted); font-size: 0.95rem; font-weight: 500;
+  padding-block: var(--space-2);
+}
+.nav-links a:hover,
+.nav-links a[aria-current="page"] { color: var(--text); }
+.nav-links a[aria-current="page"] {
+  border-bottom: 2px solid var(--accent); padding-bottom: calc(var(--space-2) - 2px);
+}
+
+/* Mobile hamburger toggle — hidden on desktop */
+.nav-toggle {
+  display: none; background: none; border: 1px solid var(--border);
+  border-radius: var(--radius); color: var(--text); padding: var(--space-2);
+  cursor: pointer; line-height: 0;
+}
+
+@media (max-width: 768px) {
+  .nav-toggle { display: inline-flex; }
+  .nav-links {
+    position: absolute; inset: 64px 0 auto 0;
+    flex-direction: column; align-items: flex-start; gap: 0;
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    padding: var(--space-3) var(--gutter);
+    /* collapsed by default; .is-open reveals it */
+    display: none;
+  }
+  .nav-links.is-open { display: flex; }
+  .nav-links li { width: 100%; }
+  .nav-links a { display: block; width: 100%; padding: var(--space-3) 0; }
+  .nav-links .btn { margin-top: var(--space-2); }
+}
+
+/* 8. BUTTONS ---------------------------------------------------------------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono); font-size: 0.9rem; font-weight: 500;
+  letter-spacing: 0.03em; text-transform: uppercase;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius); border: 1px solid transparent;
+  cursor: pointer; transition: all var(--transition); white-space: nowrap;
+}
+.btn-primary { background: var(--accent); color: #04262A; }
+.btn-primary:hover { background: var(--accent-hover); color: #04262A; }
+.btn-ghost { background: transparent; color: var(--text); border-color: var(--border); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* 9. EYEBROW LABELS + SECTION HEADERS --------------------------------------- */
+/* Mono uppercase marker, e.g.  // CONTACT  — the "briefing" device */
+.eyebrow {
+  font-family: var(--font-mono); font-size: 0.8rem; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent);
+  display: inline-block; margin-bottom: var(--space-3);
+}
+.eyebrow::before { content: "// "; color: var(--text-muted); }
+.section-head { max-width: 60ch; margin-bottom: var(--space-6); }
+.section-head p { color: var(--text-muted); margin-top: var(--space-3); }
+
+/* 10. FORMS ----------------------------------------------------------------- */
+.form-grid { display: grid; gap: var(--space-4); }
+.field { display: flex; flex-direction: column; gap: var(--space-2); }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+@media (max-width: 560px) { .field-row { grid-template-columns: 1fr; } }
+
+label {
+  font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted);
+}
+label .req { color: var(--accent); }  /* teal asterisk on required fields */
+
+input, select, textarea {
+  font-family: var(--font-sans); font-size: 1rem; color: var(--text);
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: var(--space-3) var(--space-4);
+  transition: border-color var(--transition), background var(--transition);
+  width: 100%;
+}
+input::placeholder, textarea::placeholder { color: #5D6B7E; }
+input:focus, select:focus, textarea:focus {
+  border-color: var(--accent); background: var(--surface-2);
+}
+textarea { resize: vertical; min-height: 140px; }
+select { appearance: none; cursor: pointer; }
+
+/* Honeypot: off-screen decoy field. Real users never see or tab to it.
+   Not display:none — some bots skip hidden inputs. */
+.hp-field {
+  position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;
+}
+
+/* Form status message (aria-live region) */
+.form-status { font-family: var(--font-mono); font-size: 0.9rem; min-height: 1.4em; }
+.form-status.is-error   { color: var(--danger); }
+.form-status.is-success { color: var(--success); }
+.field-note { font-size: 0.85rem; color: var(--text-muted); }
+
+/* Two-column contact layout: form + info aside */
+.contact-layout { display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--space-7); }
+@media (max-width: 860px) { .contact-layout { grid-template-columns: 1fr; gap: var(--space-6); } }
+
+.info-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: var(--space-5);
+}
+.info-card + .info-card { margin-top: var(--space-4); }
+.info-card h3 { font-size: 1rem; margin-bottom: var(--space-2); }
+.data-point { font-family: var(--font-mono); color: var(--accent); }
+
+/* 11. FOOTER ---------------------------------------------------------------- */
+.site-footer {
+  border-top: 1px solid var(--border); background: var(--surface);
+  padding-block: var(--space-6); margin-top: var(--space-8);
+}
+.footer-inner {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: var(--space-4);
+}
+.footer-inner .brand { font-size: 0.95rem; }
+.footer-meta { font-family: var(--font-mono); font-size: 0.82rem; color: var(--text-muted); }
+.footer-links { display: flex; gap: var(--space-5); list-style: none; }
+.footer-links a { color: var(--text-muted); font-size: 0.9rem; }
+.footer-links a:hover { color: var(--text); }
+
+/* 12. UTILITIES ------------------------------------------------------------- */
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+.mt-0 { margin-top: 0; }
+.text-muted { color: var(--text-muted); }
+
+/* 13. HOME / SHARED PAGE COMPONENTS ---------------------------------------- */
+/* Hero */
+.hero { padding-block: var(--space-9) var(--space-8); border-bottom: 1px solid var(--border); }
+.hero .eyebrow { margin-bottom: var(--space-4); }
+.hero h1 { max-width: 16ch; }
+/* Terse "briefing" triad headline, mono-flavored accent on key words */
+.hero h1 .hl { color: var(--accent); }
+.hero .lead { margin-top: var(--space-4); }
+.hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
+
+/* Data strip: mono key/value facts under the hero */
+.data-strip {
+  display: flex; flex-wrap: wrap; gap: var(--space-6);
+  margin-top: var(--space-7); padding-top: var(--space-5);
+  border-top: 1px solid var(--border);
+}
+.data-strip .stat { display: flex; flex-direction: column; gap: 2px; }
+.data-strip .stat b { font-family: var(--font-mono); font-weight: 500; color: var(--accent); font-size: 1.05rem; }
+.data-strip .stat span { font-size: 0.85rem; color: var(--text-muted); }
+
+/* Service card grid */
+.card-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4);
+}
+@media (max-width: 860px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .card-grid { grid-template-columns: 1fr; } }
+
+.card {
+  display: block; background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: var(--space-5);
+  transition: border-color var(--transition), transform var(--transition), background var(--transition);
+}
+a.card:hover { border-color: var(--accent); background: var(--surface-2); transform: translateY(-2px); }
+.card .card-tag {
+  font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted);
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
+.card h3 { margin: var(--space-2) 0; color: #FFFFFF; }
+.card p { color: var(--text-muted); font-size: 0.95rem; }
+.card .card-more {
+  display: inline-block; margin-top: var(--space-3);
+  font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent);
+}
+
+/* "Why us" two-column: copy + data list */
+.split { display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--space-7); align-items: start; }
+@media (max-width: 860px) { .split { grid-template-columns: 1fr; gap: var(--space-6); } }
+.check-list { list-style: none; display: grid; gap: var(--space-3); }
+.check-list li { padding-left: var(--space-5); position: relative; color: var(--text-muted); }
+.check-list li::before {
+  content: "▸"; position: absolute; left: 0; color: var(--accent); font-size: 0.9rem; top: 2px;
+}
+.check-list li strong { display: block; color: var(--text); }
+
+/* Partner badges (text-based until logo images are added) */
+.partners { display: flex; flex-wrap: wrap; gap: var(--space-4); margin-top: var(--space-5); }
+.badge {
+  font-family: var(--font-mono); font-size: 0.85rem; color: var(--text);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: var(--space-3) var(--space-4); background: var(--surface);
+}
+.badge b { color: var(--accent); font-weight: 500; }
+
+/* CTA band */
+.band {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: var(--space-7);
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: var(--space-5);
+}
+.band h2 { max-width: 22ch; }
+.band .lead { margin-top: var(--space-2); }
+
+/* Service detail blocks (Services page) — anchored, offset for sticky header */
+.svc { padding-block: var(--space-7); border-top: 1px solid var(--border); scroll-margin-top: 84px; }
+.svc:first-of-type { border-top: none; }
+.svc .eyebrow { color: var(--text-muted); }
+.svc .eyebrow::before { content: ""; }        /* no // prefix on numbered service tags */
+.svc .svc-tag {
+  font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--accent); display: inline-block;
+  margin-bottom: var(--space-3);
+}
+
+/* Simple callout panel (e.g. engagement model) */
+.callout {
+  background: var(--surface); border: 1px solid var(--border);
+  border-left: 3px solid var(--accent); border-radius: var(--radius);
+  padding: var(--space-5); margin-top: var(--space-5);
+}
+.callout h3 { font-size: 1rem; margin-bottom: var(--space-2); }
+.callout p { color: var(--text-muted); }
+
+/* Values grid (About) reuses .card-grid + .card */
+
+/* 14. REDUCED MOTION -------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

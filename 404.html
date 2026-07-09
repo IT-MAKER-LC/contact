@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page not found — IT MAKER LC</title>
+  <meta name="description" content="The page you were looking for could not be found." />
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#0A0E14" />
+  <link rel="icon" href="/favicon-it-maker.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- SHARED HEADER / NAV — no aria-current (not a real nav destination) -->
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="index.html">IT&nbsp;MAKER&nbsp;<span class="brand-mark">LC</span></a>
+      <button class="nav-toggle" aria-label="Toggle navigation menu"
+              aria-controls="nav-links" aria-expanded="false">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a class="btn btn-primary" href="contact.html">Request support</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="container">
+        <span class="eyebrow">Error 404</span>
+        <h1>Signal lost.</h1>
+        <p class="lead">That page doesn't exist or has moved. Let's get you back on the grid.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="index.html">Back to home</a>
+          <a class="btn btn-ghost" href="contact.html">Contact us</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- SHARED FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a class="brand" href="index.html">IT&nbsp;MAKER&nbsp;<span class="brand-mark">LC</span></a>
+      <ul class="footer-links">
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <p class="footer-meta">&copy; <span id="year"></span> IT MAKER LC · Salem, VA · USA</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

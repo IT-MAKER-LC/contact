@@ -2,56 +2,207 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript>
-    <link rel="stylesheet" href="styles.css">
-  </noscript>
-  <script>
-    // Fallback for browsers that do not support rel=preload
-    (function() {
-      var relPreloadSupport = false;
-      try {
-        relPreloadSupport = document.createElement('link').relList.supports('preload');
-      } catch (e) {}
-      if (!relPreloadSupport) {
-        var existing = Array.prototype.slice.call(document.getElementsByTagName('link')).some(function(l) {
-          return l.rel === 'stylesheet' && l.href && l.href.indexOf('styles.css') !== -1;
-        });
-        if (!existing) {
-          var link = document.createElement('link');
-          link.rel = 'stylesheet';
-          link.href = 'styles.css';
-          document.head.appendChild(link);
-        }
-      }
-    })();
-  </script>
-  <!-- Ensure /social-image-it-maker.png exists at the web root or update to an absolute URL if needed -->
-  <meta property="og:image" content="/social-image-it-maker.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Pro IT & Digital Services - IT MAKER LC">
-  <meta property="og:title" content="Pro IT & Digital Services - IT MAKER LC">
-  <meta property="og:description" content="Local & Modern IT services, digital security, cloud, social, & digital services for small businesses near Salem, VA">
-  <meta property="og:image" content="/social-image-it-maker.png">
-  <meta property="og:type" content="website">
-  <link rel="icon" href="/favicon-it-maker.ico" type="image/x-icon">
-  <title>Pro IT & Digital Services - IT MAKER LC</title>
-  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
+
+  <!-- SEO -->
+  <title>IT MAKER LC — Managed IT, Security &amp; Networking | Salem, VA &amp; Nationwide</title>
+  <meta name="description" content="Secure, managed IT for small businesses — patched, monitored, and performing. Networking, security, AI automation, and support. Local to Salem, VA; serving the USA remotely. Microsoft &amp; Cisco Partner." />
+  <link rel="canonical" href="https://it.makerlc.com/" />
+
+  <!-- Open Graph + Twitter -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="IT MAKER LC" />
+  <meta property="og:title" content="IT MAKER LC — Managed IT, Security &amp; Networking" />
+  <meta property="og:description" content="Secure, managed IT for small businesses — patched, monitored, performing. Local to Salem, VA; serving the USA remotely." />
+  <meta property="og:url" content="https://it.makerlc.com/" />
+  <meta property="og:image" content="https://it.makerlc.com/assets/og-default.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="IT MAKER LC — Managed IT, Security &amp; Networking" />
+  <meta name="twitter:description" content="Secure, managed IT for small businesses — patched, monitored, performing. Salem, VA &amp; nationwide." />
+  <meta name="twitter:image" content="https://it.makerlc.com/assets/og-default.png" />
+
+  <meta name="theme-color" content="#0A0E14" />
+  <link rel="icon" href="/favicon-it-maker.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <!-- Structured data: Organization + LocalBusiness (no opening hours). -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "IT MAKER LC",
+    "url": "https://it.makerlc.com",
+    "image": "https://it.makerlc.com/assets/og-default.png",
+    "description": "Managed IT services, networking, security, AI automation, and digital services for small businesses. Microsoft and Cisco Partner.",
+    "address": { "@type": "PostalAddress", "addressLocality": "Salem", "addressRegion": "VA", "addressCountry": "US" },
+    "areaServed": [
+      { "@type": "City", "name": "Salem, VA" },
+      { "@type": "Country", "name": "United States" }
+    ],
+    "email": "info@makerlc.com",
+    "telephone": "+1-540-750-1153"
+  }
+  </script>
 </head>
 <body>
-  <div class="container">
-    <h1>IT MAKER LC</h1>
-    <p>#Networks #Security #Digital #Cloud #Social #BusinessTech</p>
-    <p>Small Business & Startup Tech</p>
-    <iframe 
-      class="form-frame"
-      src="https://forms.office.com/r/YXRTmMqiV9?embed=true"
-      allowfullscreen>
-    </iframe>
-    <div class="footer">&copy; <span id="year"></span> IT MAKER LC </div>
-    <script>
-      document.getElementById('year').textContent = new Date().getFullYear();
-    </script>
-  </div>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- =========================================================================
+       SHARED HEADER / NAV — duplicate verbatim on every page; only aria-current changes.
+       ========================================================================= -->
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="index.html">IT&nbsp;MAKER&nbsp;<span class="brand-mark">LC</span></a>
+      <button class="nav-toggle" aria-label="Toggle navigation menu"
+              aria-controls="nav-links" aria-expanded="false">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html" aria-current="page">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a class="btn btn-primary" href="contact.html">Request support</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============================ HERO ============================ -->
+    <section class="hero">
+      <div class="container">
+        <span class="eyebrow">Managed IT &amp; Security</span>
+        <h1><span class="hl">Secure.</span> <span class="hl">Patched.</span> <span class="hl">Performing.</span></h1>
+        <p class="lead">Managed IT and security for small businesses — engineered like a network
+           operations center. We keep your systems locked down, up to date, and running fast, so
+           you can run the business. Local to Salem, VA; serving the USA remotely.</p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="contact.html">Request support</a>
+          <a class="btn btn-ghost" href="services.html">Explore services</a>
+        </div>
+
+        <!-- Mono data strip: quick, scannable facts -->
+        <div class="data-strip">
+          <div class="stat"><b>Salem, VA + USA</b><span>On-site local · remote nationwide</span></div>
+          <div class="stat"><b>&lt; 1 business day</b><span>Response to new inquiries</span></div>
+          <div class="stat"><b>Microsoft &amp; Cisco</b><span>Official technology partner</span></div>
+          <div class="stat"><b>Security-first</b><span>Patching, monitoring, zero-trust mindset</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ SERVICES OVERVIEW ============================ -->
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Capabilities</span>
+          <h2>What we do</h2>
+          <p>Full-stack IT for small business and startups — from the firewall to the front desk.</p>
+        </div>
+
+        <div class="card-grid">
+          <a class="card" href="services.html#managed-it">
+            <span class="card-tag">01 / Managed IT</span>
+            <h3>Managed IT &amp; support</h3>
+            <p>Proactive monitoring, patching, and helpdesk — plus hourly support when you just need a hand.</p>
+            <span class="card-more">Learn more →</span>
+          </a>
+          <a class="card" href="services.html#networking">
+            <span class="card-tag">02 / Networking</span>
+            <h3>Networking &amp; Wi-Fi</h3>
+            <p>Business-grade networks, Wi-Fi, firewalls, and endpoint management built to stay up.</p>
+            <span class="card-more">Learn more →</span>
+          </a>
+          <a class="card" href="services.html#security">
+            <span class="card-tag">03 / Security</span>
+            <h3>Security &amp; compliance</h3>
+            <p>Zero-trust fundamentals, patch discipline, backups, and guidance on compliance.</p>
+            <span class="card-more">Learn more →</span>
+          </a>
+          <a class="card" href="services.html#ai">
+            <span class="card-tag">04 / Automation</span>
+            <h3>AI &amp; automation</h3>
+            <p>Practical automations and AI workflows that cut busywork — built on tools you already own.</p>
+            <span class="card-more">Learn more →</span>
+          </a>
+          <a class="card" href="services.html#digital">
+            <span class="card-tag">05 / Digital</span>
+            <h3>Digital &amp; social</h3>
+            <p>Websites, digital presence, and social media management that look as sharp as your ops.</p>
+            <span class="card-more">Learn more →</span>
+          </a>
+          <a class="card" href="services.html#resell">
+            <span class="card-tag">06 / Resell</span>
+            <h3>Hardware &amp; software</h3>
+            <p>The right gear and licensing, sourced and set up — no markup games, no guesswork.</p>
+            <span class="card-more">Learn more →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ WHY US ============================ -->
+    <section class="section-tight">
+      <div class="container split">
+        <div>
+          <span class="eyebrow">Why IT MAKER LC</span>
+          <h2>Enterprise discipline, small-business access.</h2>
+          <p class="lead">You get an owner-operator who answers directly — with the security-first
+             habits and partner-grade tooling of a much larger shop. No ticket black holes, no
+             account-manager runaround.</p>
+
+          <div class="partners">
+            <span class="badge"><b>Microsoft</b> Partner</span>
+            <span class="badge"><b>Cisco</b> Partner</span>
+          </div>
+        </div>
+
+        <ul class="check-list">
+          <li><strong>Security &amp; patching first</strong>Systems monitored and kept current — the boring work that prevents the 2 a.m. calls.</li>
+          <li><strong>Performance you can feel</strong>Networks and endpoints tuned to run fast and stay up.</li>
+          <li><strong>Direct, responsive support</strong>Talk to the person doing the work. New inquiries answered within one business day.</li>
+          <li><strong>Right-sized for you</strong>MSP retainer or hourly — scoped to what a small business actually needs.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================ CTA BAND ============================ -->
+    <section class="section-tight">
+      <div class="container">
+        <div class="band">
+          <div>
+            <span class="eyebrow">Get started</span>
+            <h2>Let's make your IT simple & reliable.</h2>
+            <p class="lead">Tell us what's going on or how you want to grow — we'll reply within one business day.</p>
+          </div>
+          <a class="btn btn-primary" href="contact.html">Request support</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       SHARED FOOTER — duplicate verbatim on every page.
+       ========================================================================= -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a class="brand" href="index.html">IT&nbsp;MAKER&nbsp;<span class="brand-mark">LC</span></a>
+      <ul class="footer-links">
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <p class="footer-meta">&copy; <span id="year"></span> IT MAKER LC · Salem, VA · USA</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
 </body>
 </html>
