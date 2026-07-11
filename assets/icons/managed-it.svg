@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Managed IT and support">
+  <!-- Service 01 · Managed IT — squared track-frame badge (twin concentric rails +
+       ties, favicon-style, background-independent) with a monitored-screen glyph. -->
+  <style>
+    .rail{fill:none;stroke:#E8BE3C;stroke-width:1.1}
+    .tie{stroke:#E8BE3C;stroke-width:1.1;stroke-linecap:butt}
+    .sym{fill:none;stroke:#E8BE3C;stroke-width:1.7;stroke-linejoin:miter;stroke-linecap:round}
+  </style>
+  <rect class="rail" x="4" y="4" width="56" height="56" rx="6"/>
+  <rect class="rail" x="8.5" y="8.5" width="47" height="47" rx="4"/>
+  <g class="tie">
+    <path d="M20 4 L20 8.5 M32 4 L32 8.5 M44 4 L44 8.5"/>
+    <path d="M20 55.5 L20 60 M32 55.5 L32 60 M44 55.5 L44 60"/>
+    <path d="M4 20 L8.5 20 M4 32 L8.5 32 M4 44 L8.5 44"/>
+    <path d="M55.5 20 L60 20 M55.5 32 L60 32 M55.5 44 L60 44"/>
+    <path d="M5.8 5.8 L9.7 9.7 M58.2 5.8 L54.3 9.7 M5.8 58.2 L9.7 54.3 M58.2 58.2 L54.3 54.3"/>
+  </g>
+  <!-- monitor + uptime pulse + stand -->
+  <rect class="sym" x="16" y="18" width="32" height="15"/>
+  <path class="sym" d="M20 25 L25 25 L28 20 L31 30 L34 25 L44 25"/>
+  <path class="sym" d="M32 33 L32 39 M26 39 L38 39"/>
+</svg>

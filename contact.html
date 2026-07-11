@@ -141,10 +141,13 @@
               <textarea id="message" name="message" placeholder="A sentence or two about what's going on." required></textarea>
             </div>
 
-            <!-- Honeypot: hidden decoy. Real users never see or tab here. -->
+            <!-- Honeypot: hidden decoy. Real users never see or tab here.
+                 Named away from "website"/"url" so browser autofill and password
+                 managers can't fill it and cause real submissions to be dropped. -->
             <div class="hp-field" aria-hidden="true">
-              <label for="website">Website</label>
-              <input type="text" id="website" name="hp" tabindex="-1" autocomplete="off" />
+              <label for="hp-check">Leave this field empty</label>
+              <input type="text" id="hp-check" name="hp" tabindex="-1" autocomplete="off"
+                     aria-hidden="true" />
             </div>
 
             <div class="field">

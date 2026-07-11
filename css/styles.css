@@ -161,7 +161,10 @@ select:focus-visible, textarea:focus-visible {
   color: #FFFFFF; letter-spacing: 0.02em; white-space: nowrap;
 }
 .brand:hover { color: #FFFFFF; }
-.brand .brand-mark { color: var(--accent); }  /* gold accent on the mark */
+/* Gold "LC" suffix, set smaller than "IT MAKER" as a logotype treatment.
+   0.7em = 70% of the brand size; em keeps it proportional in header (1.05rem)
+   and footer (0.95rem). font-weight/baseline inherit so it sits on the line. */
+.brand .brand-mark { color: var(--accent); font-size: 0.7em; }
 
 .nav-links {
   display: flex; align-items: center; gap: var(--space-5); list-style: none;
@@ -331,25 +334,45 @@ select { appearance: none; cursor: pointer; }
   -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
           mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
 }
-/* Animated cyber scan-line sweeping down the hero */
-.hero::after {
-  content: ""; position: absolute; left: 50%; top: 50%; z-index: 1; pointer-events: none;
-  width: 240%; height: 2px; transform-origin: center;
-  /* Marine scarlet fading to gold along the line's length */
-  background: linear-gradient(90deg, transparent, #C8102E 28%, var(--accent-bright) 72%, transparent);
-  /* dotted: punch the line into dots so it reads as a rail/telemetry trace */
-  -webkit-mask-image: repeating-linear-gradient(90deg, #000 0 3px, transparent 3px 9px);
-          mask-image: repeating-linear-gradient(90deg, #000 0 3px, transparent 3px 9px);
-  filter: drop-shadow(0 0 6px rgba(255,206,71,0.35));
-  animation: heroScan 6s linear infinite;
+/* ---------------------------------------------------------------------------
+   HERO TRAIN RAIL  (in-flow band between the CTA buttons and the data strip)
+   A line-art locomotive rides a faint gold rail that sits in its own band in
+   the hero's normal flow — placed in the markup BETWEEN .hero-actions and
+   .data-strip, so it always lands in that gap (never behind the stats text).
+   The band is container-width; the train is clipped to it and loops L→R.
+   --------------------------------------------------------------------------- */
+.hero-rail {
+  position: relative;                 /* was an absolute backdrop */
+  width: 100%; height: 64px;
+  margin-block: var(--space-4);       /* breathing room above/below the band */
+  overflow: hidden;                   /* clip the locomotive to the band */
+  pointer-events: none; opacity: 0.5;
+  /* The rail itself: two gold hairlines + evenly spaced "ties", painted as
+     layered backgrounds so no extra elements are needed. Track sits low in the
+     band; the train rides on top of it. */
+  background:
+    linear-gradient(var(--accent), var(--accent)) 0 56px / 100% 1.5px repeat-x,
+    linear-gradient(var(--accent), var(--accent)) 0 61px / 100% 1.5px repeat-x,
+    repeating-linear-gradient(90deg, var(--accent) 0 1.5px, transparent 1.5px 22px) 0 58px / 100% 5px repeat-x;
+  /* Fade the rail out at both edges so it doesn't hit the container walls hard. */
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
 }
-/* rotate() reads --scan-angle (JS randomizes it each pass, so the line crosses
-   from a new angle every sweep); translateY animates the pass across the hero. */
-@keyframes heroScan {
-  0%   { transform: translate(-50%,-50%) rotate(var(--scan-angle, 18deg)) translateY(-190%); opacity: 0; }
-  12%  { opacity: 0.9; }
-  88%  { opacity: 0.9; }
-  100% { transform: translate(-50%,-50%) rotate(var(--scan-angle, 18deg)) translateY(190%); opacity: 0; }
+/* The locomotive: line-art (stroke-only) SVG, colored via currentColor = gold.
+   Rides the rail and loops left → right. We animate `left` (relative to the
+   band's width) rather than translateX, so one pass = exactly one band-width. */
+.hero-train {
+  position: absolute; bottom: 12px; left: 0;
+  width: 132px; height: auto; color: var(--accent);
+  filter: drop-shadow(0 0 7px rgba(255,206,71,0.30));  /* soft headlight halo */
+  will-change: left;
+  animation: trainRun 26s linear infinite;
+}
+/* Enter off the left edge, exit off the right; the long pause offscreen keeps
+   the band calm between passes. */
+@keyframes trainRun {
+  0%   { left: -150px; }
+  100% { left: 100%; }
 }
 .hero .eyebrow { margin-bottom: var(--space-4); }
 .hero h1 { max-width: 16ch; }
@@ -452,6 +475,10 @@ a.card:hover { border-color: var(--accent); background: var(--surface-2); transf
   text-transform: uppercase; color: var(--accent); display: inline-block;
   margin-bottom: var(--space-3);
 }
+/* Topic icon above each service tag — squared track-frame badges: twin concentric
+   rails + ties (favicon-style, background-independent) around a fine straight-line
+   glyph. Sized modestly so they read as a label, not a hero graphic. */
+.svc-icon { width: 56px; height: 56px; margin-bottom: var(--space-3); display: block; }
 
 /* Simple callout panel (e.g. engagement model) */
 .callout {
@@ -484,5 +511,12 @@ a.card:hover { border-color: var(--accent); background: var(--surface-2); transf
     animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .hero::after { display: none; }   /* hide the animated scan-line entirely */
+  /* Motion-sensitive users: the global rule above freezes trainRun to a single
+     frame, which parks the locomotive mid-hero. Nudge it to a resting spot on
+     the rail (a little in from the left) so it looks intentional, not stalled.
+     The rail itself is static, so the scene still reads as "train on a track". */
+  .hero-train {
+    animation: none !important;
+    left: 8%;                 /* park a little in from the left, on the rail */
+  }
 }

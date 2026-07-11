@@ -1,0 +1,28 @@
+# =============================================================================
+# .gitattributes — line-ending normalization for IT MAKER LC site
+# Stops CRLF/LF churn from making every file look "modified" in git status.
+# `text=auto` lets git decide what's text; `eol=lf` checks text out with LF
+# on every OS, so Windows editors don't reintroduce CRLF.
+# =============================================================================
+
+# Default: treat everything as text, normalize to LF in the repo and on checkout
+* text=auto eol=lf
+
+# Explicit text types (belt-and-suspenders; keeps diffs clean)
+*.html  text eol=lf
+*.css   text eol=lf
+*.js    text eol=lf
+*.json  text eol=lf
+*.xml   text eol=lf
+*.svg   text eol=lf
+*.md    text eol=lf
+*.txt   text eol=lf
+
+# Binary assets — never touch line endings or attempt to diff
+*.png   binary
+*.ico   binary
+*.woff2 binary
+*.woff  binary
+*.jpg   binary
+*.jpeg  binary
+*.webp  binary

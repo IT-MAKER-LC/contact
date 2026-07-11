@@ -45,21 +45,11 @@
   var yearEl = document.getElementById("year");
   if (yearEl) { yearEl.textContent = new Date().getFullYear(); }
 
-  /* 2b. HERO SCAN-LINE ANGLE ----------------------------------------------- */
-  // Randomize the scan-line's sweep angle each pass so it crosses the hero from
-  // a new angle every time. The line is a .hero::after pseudo-element; its
-  // animationiteration event bubbles to the .hero element, and it reads the
-  // inherited --scan-angle CSS variable that we update here.
-  (function () {
-    var heroes = document.querySelectorAll(".hero");
-    function randAngle() { return (Math.random() * 76 - 38).toFixed(1) + "deg"; } // -38deg..38deg
-    heroes.forEach(function (h) {
-      h.style.setProperty("--scan-angle", randAngle());
-      h.addEventListener("animationiteration", function (e) {
-        if (e.animationName === "heroScan") h.style.setProperty("--scan-angle", randAngle());
-      });
-    });
-  })();
+  /* 2b. HERO TRAIN BACKDROP ------------------------------------------------- */
+  // The hero locomotive is now pure CSS (a line-art SVG riding a gold rail,
+  // animated via the `trainRun` keyframes in styles.css). No JS is required —
+  // this block intentionally left as a marker so the old scan-angle randomizer
+  // isn't reintroduced. See ".hero-rail" / ".hero-train" in styles.css.
 
   /* 3. CONTACT FORM HANDLER ------------------------------------------------- */
   var form = document.getElementById("contact-form");
