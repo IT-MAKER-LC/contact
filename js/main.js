@@ -96,23 +96,33 @@
       setLoading(true);
       showStatus("Sending...", "");
 
-      // CORS-safe send: text/plain + no-cors avoids a preflight the Power
-      // Automate endpoint won't answer. The response is "opaque" (unreadable),
-      // so we optimistically treat a non-throwing fetch as success and rely on
-      // the flow's auto-reply email for real confirmation to the user.
+      // CORS-safe send WITHOUT a preflight:
+      //   - Content-Type "text/plain" is a CORS-"simple" request, so the browser
+      //     does NOT fire an OPTIONS preflight (which the Power Automate trigger
+      //     can't answer). The flow still parses the body as JSON text.
+      //   - mode:"cors" (the default) lets us actually READ the response, so a
+      //     failed flow surfaces to the user instead of a silent false "success".
+      //     This requires the flow to end with a Response action that returns an
+      //     Access-Control-Allow-Origin header (see the flow setup notes/README).
       fetch(flowUrl, {
         method: "POST",
-        mode: "no-cors",
         headers: { "Content-Type": "text/plain;charset=UTF-8" },
         body: JSON.stringify(payload)
       })
-        .then(function () {
+        .then(function (response) {
+          // response.ok is true only for 2xx. If the flow's email step fails,
+          // the flow returns a non-2xx status and we fall into the error branch.
+          if (!response.ok) {
+            throw new Error("Flow returned HTTP " + response.status);
+          }
           showStatus("Thanks - your message has been sent. We'll be in touch shortly.", "is-success");
           form.reset();
         })
-        .catch(function () {
+        .catch(function (err) {
+          // Covers both network/CORS failures and non-2xx responses above.
           showStatus(
-            "Something went wrong sending your message. Please email us directly or try again.",
+            "Something went wrong sending your message. Please email us directly at " +
+            "info@it.makerlc.com or try again.",
             "is-error"
           );
         })
