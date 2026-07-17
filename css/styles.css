@@ -157,14 +157,26 @@ select:focus-visible, textarea:focus-visible {
   min-height: 64px; gap: var(--space-4);
 }
 .brand {
+  display: inline-flex; align-items: center; gap: 0.5em;
   font-family: var(--font-mono); font-weight: 500; font-size: 1.05rem;
   color: #FFFFFF; letter-spacing: 0.02em; white-space: nowrap;
 }
 .brand:hover { color: #FFFFFF; }
+/* Square network-mesh mark sits left of the wordmark. Sized in em so it tracks
+   the brand font-size in both header (1.05rem) and footer (0.95rem). flex:none
+   stops it squashing when the nav gets tight. */
+.brand-logo { width: 2em; height: 2em; display: block; flex: none; }
+/* Keep the wordmark as ONE inline text run. Without this wrapper the flex
+   container would split "IT MAKER" and the LC span into separate flex items,
+   and align-items:center would vertically center LC instead of letting it
+   sit on the shared text baseline. */
+.brand-name { display: inline-block; }
 /* Gold "LC" suffix, set smaller than "IT MAKER" as a logotype treatment.
    0.7em = 70% of the brand size; em keeps it proportional in header (1.05rem)
-   and footer (0.95rem). font-weight/baseline inherit so it sits on the line. */
-.brand .brand-mark { color: var(--accent); font-size: 0.7em; }
+   and footer (0.95rem). vertical-align:baseline bottom-aligns the caps with
+   "IT MAKER" (no descenders => baseline == bottom) so LC sits flush at the
+   bottom everywhere the company name appears. */
+.brand .brand-mark { color: var(--accent); font-size: 0.7em; vertical-align: baseline; }
 
 .nav-links {
   display: flex; align-items: center; gap: var(--space-5); list-style: none;
