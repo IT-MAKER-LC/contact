@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 72" role="img" aria-label="IT MAKER LC">
+  <g transform="translate(4,4)"><g fill="none" stroke="#04060F">
+    <rect x="4" y="4" width="56" height="56" rx="6" stroke-width="1.1"/>
+    <rect x="8.5" y="8.5" width="47" height="47" rx="4" stroke-width="1.1"/>
+    <g stroke-width="1.1" stroke-linecap="butt">
+      <path d="M20 4 L20 8.5 M32 4 L32 8.5 M44 4 L44 8.5"/>
+      <path d="M20 55.5 L20 60 M32 55.5 L32 60 M44 55.5 L44 60"/>
+      <path d="M4 20 L8.5 20 M4 32 L8.5 32 M4 44 L8.5 44"/>
+      <path d="M55.5 20 L60 20 M55.5 32 L60 32 M55.5 44 L60 44"/>
+      <path d="M5.8 5.8 L9.7 9.7 M58.2 5.8 L54.3 9.7 M5.8 58.2 L9.7 54.3 M58.2 58.2 L54.3 54.3"/>
+    </g>
+    <g stroke-width="1.7" stroke-linejoin="miter" stroke-linecap="round">
+      <path d="M28.5 28.5 L20 20 M35.5 28.5 L44 20 M28.5 35.5 L20 44 M35.5 35.5 L44 44"/>
+      <rect x="29" y="29" width="6" height="6"/>
+      <rect x="16" y="16" width="4" height="4"/><rect x="44" y="16" width="4" height="4"/>
+      <rect x="16" y="44" width="4" height="4"/><rect x="44" y="44" width="4" height="4"/>
+    </g>
+  </g></g>
+  <text x="86" y="46" font-family="ui-monospace,'Cascadia Mono','JetBrains Mono','Liberation Mono','Courier New',monospace" font-weight="700" fill="#04060F"><tspan font-size="27" letter-spacing="2">IT MAKER </tspan><tspan font-size="17.5" letter-spacing="1.5">LC</tspan></text>
+</svg>
